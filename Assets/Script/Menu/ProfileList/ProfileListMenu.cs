@@ -160,6 +160,22 @@ namespace YARG.Menu.ProfileList
             RefreshList();
         }
 
+        public void AddFruitFlyProfile()
+        {
+            PlayerContainer.AddProfile(new YargProfile
+            {
+                Name = GetUniqueProfileName("Fruit fly"),
+                NoteSpeed = 5,
+                HighwayLength = 1,
+                GameMode = GameMode.FourLaneDrums,
+                CurrentInstrument = Instrument.FourLaneDrums,
+                IsBot = true,
+                IsFruitFly = true
+            });
+
+            RefreshList();
+        }
+
         public void MoveProfileUp(YargProfile profile)
         {
             PlayerContainer.MoveUp(PlayerContainer.GetPlayerFromProfile(profile));

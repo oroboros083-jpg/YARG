@@ -188,6 +188,10 @@ namespace YARG.Gameplay.Player
             }
 
             var engine = new YargDrumsEngine(NoteTrack, SyncTrack, EngineParams, Player.Profile.IsBot, Player.Profile.GameMode is GameMode.EliteDrums);
+            if (Player.Profile.IsFruitFly)
+            {
+                engine.FlyTake = FruitFlyTakes.LoadOrEmpty(GameManager.Song, "drums");
+            }
             EngineContainer = GameManager.EngineManager.Register(engine, NoteTrack.Instrument, Chart, Player.RockMeterPreset);
 
             HitWindow = EngineParams.HitWindow;
