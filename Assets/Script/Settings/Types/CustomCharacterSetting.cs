@@ -62,26 +62,12 @@ namespace YARG.Settings.Types
                     continue;
                 }
 
+                // A plain VenueCharacter (no VRM) is a valid character too; it just has no meta to name it
                 var vrmInstance = character.GetComponent<Vrm10Instance>();
-                if (vrmInstance == null)
-                {
-                    bundle.Unload(true);
-                    continue;
-                }
-
-                string name;
-
-                if (vrmInstance.Vrm != null && vrmInstance.Vrm.Meta != null && string.IsNullOrEmpty(vrmInstance.Vrm.Meta.Name))
-                {
-                    name = vrmInstance.Vrm.Meta.Name;
-                }
-                else
-                {
-                    name = Path.GetFileNameWithoutExtension(file);
-                }
+                var name = GetDisplayName(vrmInstance, file);
 
                 var venueCharacter = character.GetComponent<VenueCharacter>();
-                if (venueCharacter != null && venueCharacter.Type != _characterType)
+                if (venueCharacter != null && venueCharacter.Type == _characterType)
                 {
                     _possibleValues.Add(file);
                     _fileToName[file] = name;
@@ -89,6 +75,17 @@ namespace YARG.Settings.Types
 
                 bundle.Unload(true);
             }
+        }
+
+        public static string GetDisplayName(Vrm10Instance vrmInstance, string file)
+        {
+            if (vrmInstance != null && vrmInstance.Vrm != null && vrmInstance.Vrm.Meta != null &&
+                !string.IsNullOrEmpty(vrmInstance.Vrm.Meta.Name))
+            {
+                return vrmInstance.Vrm.Meta.Name;
+            }
+
+            return Path.GetFileNameWithoutExtension(file);
         }
 
         public override string ValueToString(string value)

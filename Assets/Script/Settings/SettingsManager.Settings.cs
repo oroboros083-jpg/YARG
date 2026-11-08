@@ -599,6 +599,9 @@ namespace YARG.Settings
             public OutputChannelSetting OutputChannelMetronome { get; } = new(-1, OutputChannelMetronomeCallback);
 
             public CustomCharacterSetting CustomVocalsCharacter { get; } = new(string.Empty, VenueCharacter.CharacterType.Vocals, CustomCharacterCallback);
+            public CustomCharacterSetting CustomGuitarCharacter { get; } = new(string.Empty, VenueCharacter.CharacterType.Guitar, CustomCharacterCallback);
+            public CustomCharacterSetting CustomBassCharacter { get; } = new(string.Empty, VenueCharacter.CharacterType.Bass, CustomCharacterCallback);
+            public CustomCharacterSetting CustomDrumsCharacter { get; } = new(string.Empty, VenueCharacter.CharacterType.Drums, CustomCharacterCallback);
             #endregion
 
             #region Helpers

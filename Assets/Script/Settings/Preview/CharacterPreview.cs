@@ -26,10 +26,15 @@ namespace YARG.Settings.Preview
 
             _character = characterInstance;
 
-            _vrmCharacter = characterInstance.GetComponent<VRMCharacter>();
+            // Plain (non-VRM) characters preview too
+            var venueCharacter = characterInstance.GetComponent<VenueCharacter>();
+            _vrmCharacter = venueCharacter as VRMCharacter;
 
-            _vrmCharacter.Initialize();
-            _vrmCharacter.SetPreviewIdle();
+            if (venueCharacter != null)
+            {
+                venueCharacter.Initialize(null);
+                venueCharacter.SetPreviewIdle();
+            }
 
             return characterInstance;
         }

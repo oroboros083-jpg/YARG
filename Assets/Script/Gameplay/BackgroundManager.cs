@@ -248,7 +248,7 @@ namespace YARG.Gameplay
                 SetUpVideoTexture(songBackground);
             }
 
-            await LoadCustomCharacter(bgInstance);
+            await LoadCustomCharacters(bgInstance);
 
             // Initialize CharacterManager, if it exists
             var characterManager = bgInstance.GetComponentInChildren<CharacterManager>();
@@ -500,10 +500,25 @@ namespace YARG.Gameplay
             // The venue is dealt with in the GameManager via Time.timeScale
         }
 
-        private async UniTask LoadCustomCharacter(GameObject venueRoot)
+        private async UniTask LoadCustomCharacters(GameObject venueRoot)
         {
-            string characterPath = SettingsManager.Settings.CustomVocalsCharacter.Value;
+            var settings = SettingsManager.Settings;
+            string[] characterPaths =
+            {
+                settings.CustomVocalsCharacter.Value,
+                settings.CustomGuitarCharacter.Value,
+                settings.CustomBassCharacter.Value,
+                settings.CustomDrumsCharacter.Value,
+            };
 
+            foreach (var characterPath in characterPaths)
+            {
+                await LoadCustomCharacter(venueRoot, characterPath);
+            }
+        }
+
+        private async UniTask LoadCustomCharacter(GameObject venueRoot, string characterPath)
+        {
             if (string.IsNullOrEmpty(characterPath))
             {
                 return;
@@ -535,7 +550,14 @@ namespace YARG.Gameplay
             // Load default animation controller and parameters if necessary
             LoadAnimationDefaults(character);
 
-            var newType = character.GetComponent<VenueCharacter>().Type;
+            var newVenueCharacter = character.GetComponent<VenueCharacter>();
+            if (newVenueCharacter == null)
+            {
+                YargLogger.LogFormatError("Character in {0} has no VenueCharacter component", characterPath);
+                return;
+            }
+
+            var newType = newVenueCharacter.Type;
             // Find a character of the same type in venueRoot
             GameObject existingCharacter = null;
 
@@ -559,6 +581,17 @@ namespace YARG.Gameplay
             var existingParent = existingCharacter.transform.parent;
 
             var newCharacter = Instantiate(character, existingParent);
+
+            // A plain (non-VRM) character stands where the one it replaces stood, and its prefab root rotation
+            // is kept as an offset so a model can be turned to face the audience. VRM characters keep their
+            // original placement so existing vocalist venues look the same.
+            if (newCharacter.GetComponent<VRMCharacter>() == null)
+            {
+                var existingTransform = existingCharacter.transform;
+                newCharacter.transform.localPosition = existingTransform.localPosition;
+                newCharacter.transform.localRotation = existingTransform.localRotation * character.transform.localRotation;
+            }
+
             ReplaceReferences(venueRoot, existingCharacter, newCharacter);
             existingCharacter.SetActive(false);
             Destroy(existingCharacter);
@@ -618,6 +651,13 @@ namespace YARG.Gameplay
             // Check for an existing animation controller and use default if none is found
             var animator = character.GetComponent<Animator>();
             var vrmCharacter = character.GetComponent<VRMCharacter>();
+
+            // A plain VenueCharacter always brings its own controller and timing
+            if (vrmCharacter == null)
+            {
+                return;
+            }
+
             if (!vrmCharacter.UseCustomAnimations && animator != null)
             {
                 var controller = animator.runtimeAnimatorController;

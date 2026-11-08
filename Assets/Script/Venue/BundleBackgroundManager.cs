@@ -120,15 +120,54 @@ namespace YARG.Venue
         // Code to export a background from the editor.
         //
 
-        private GameObject _backgroundReference;
-
         private void Export(GameObject root, BackgroundHelper.ExportType type)
         {
-            _backgroundReference = root;
             string defaultName = type == BackgroundHelper.ExportType.Character ? "character" : "bg";
             string extension = type == BackgroundHelper.ExportType.Character ? "yargchar" : "yarground";
             string title = type == BackgroundHelper.ExportType.Character ? "Export Character" : "Export Background";
             string path = EditorUtility.SaveFilePanel(title, string.Empty, defaultName, extension);
+
+            if (string.IsNullOrEmpty(path))
+            {
+                return;
+            }
+
+            try
+            {
+                // The context menus have always collected shaders from the whole venue, even for a character
+                ExportBundle(root, type, path, gameObject, requireMetalShaders: true);
+                EditorUtility.DisplayDialog("Export Successful!", "Export Successful!", "OK");
+            }
+            catch (Exception e)
+            {
+                Debug.LogException(e);
+                EditorUtility.DisplayDialog("Export Unsuccessful", "Export failed. See console for more info.", "OK");
+            }
+        }
+
+        /// <summary>
+        /// Builds <paramref name="root"/> into a .yargchar or .yarground at <paramref name="path"/> without any
+        /// dialogs, so batch-mode tools can call it. Throws on failure.
+        /// </summary>
+        /// <param name="shaderRoot">
+        /// The object whose materials anchor the MacOS Metal shader bundle; defaults to <paramref name="root"/>.
+        /// </param>
+        /// <param name="requireMetalShaders">
+        /// When false, a missing MacOS build module skips the Metal shader bundle with a warning (the export then
+        /// renders everywhere but MacOS) instead of failing.
+        /// </param>
+        public static void ExportBundle(GameObject root, BackgroundHelper.ExportType type, string path,
+            GameObject shaderRoot = null, bool requireMetalShaders = false)
+        {
+            if (shaderRoot == null)
+            {
+                shaderRoot = root;
+            }
+
+            string fileName = Path.GetFileName(path);
+            var metalAssetBundleName = fileName + BUNDLE_OSX_SUFFIX;
+            var backgroundPath = BackgroundHelper.ExportType.Character == type ? CHARACTER_PREFAB_PATH : BACKGROUND_PREFAB_PATH;
+            var assetPaths = new List<string>();
 
             GameObject clonedBackground = null;
 
@@ -136,94 +175,28 @@ namespace YARG.Venue
 
             try
             {
-                if (string.IsNullOrEmpty(path))
-                {
-                    return;
-                }
-                string fileName = Path.GetFileName(path);
-                string folderPath = Path.GetDirectoryName(path);
-
                 // First we'll collect all shaders and build a separate bundle out of them
                 // for Mac as no other build target will include Metal shaders
                 // And we want our background to work everywhere
-
-                // We use materials as "anchors" to make sure all required
-                // shader variants are included
-                var metalAssetBundleName = fileName + BUNDLE_OSX_SUFFIX;
-                var materialAssets = EditorUtility.CollectDependencies(new[] { gameObject })
-                    .OfType<Material>() // Only material dependencices
-                    .Select((mat, i) =>
-                    {
-                        // Create a clone
-                        var matClone = new Material(mat);
-                        // Avoid name collision
-                        matClone.name = BACKGOUND_OSX_MATERIAL_PREFIX + i.ToString() + mat.name;
-                        // Drop all textures to not double resulting yarground in size
-                        if (matClone.mainTexture != null)
-                        {
-                            matClone.mainTexture = Texture2D.whiteTexture;
-                        }
-                        foreach (var id in matClone.GetTexturePropertyNameIDs())
-                        {
-                            if (matClone.GetTexture(id) != null)
-                            {
-                                matClone.SetTexture(id, Texture2D.whiteTexture);
-                            }
-                        }
-                        var assetPath = Path.Combine("Assets", matClone.name + ".mat");
-                        AssetDatabase.CreateAsset(matClone, assetPath);
-
-                        return assetPath;
-                    })
-                    .ToArray();
-
-                var shaderAssets = EditorUtility.CollectDependencies(new[] { gameObject })
-                    .OfType<Shader>().Select(AssetDatabase.GetAssetPath);
-
-                if (materialAssets.Length > 0)
+                if (BuildPipeline.IsBuildTargetSupported(BuildTargetGroup.Standalone, BuildTarget.StandaloneOSX))
                 {
-                    var metalAssetBundleBuild = default(AssetBundleBuild);
-                    metalAssetBundleBuild.assetBundleName = metalAssetBundleName;
-                    metalAssetBundleBuild.assetNames = materialAssets.Concat(shaderAssets).ToArray();
-
-                    BuildPipeline.BuildAssetBundles(Application.temporaryCachePath,
-                        new[]
-                        {
-                            metalAssetBundleBuild
-                        }, BuildAssetBundleOptions.ForceRebuildAssetBundle,
-                        BuildTarget.StandaloneOSX);
-
-                    var filePath = Path.Combine(Application.temporaryCachePath, metalAssetBundleName);
-
-                    if (!File.Exists(filePath))
+                    if (BuildMetalShaderBundle(shaderRoot, metalAssetBundleName))
                     {
-                        EditorUtility.DisplayDialog("Export Unsuccessful", "Failed to build MacOS Shader bundle. See console for more info.", "OK");
-                        throw new FileNotFoundException("MacOS Shader bundle failed to build. <a href=\"https://wiki.yarg.in/wiki/Venue_Creation\">Please ensure you have the \"MacOS Build Support (Mono)\" module installed.</a>");
+                        assetPaths.Add(Path.Combine("Assets/", metalAssetBundleName));
                     }
-
-                    var assetPath = Path.Combine(Application.dataPath, metalAssetBundleName);
-                    File.Move(filePath, assetPath);
-                    AssetDatabase.ImportAsset(Path.Combine("Assets", metalAssetBundleName));
                 }
-                // Now delete our material clones
-                foreach (var assetPath in materialAssets)
+                else if (requireMetalShaders)
                 {
-                    AssetDatabase.DeleteAsset(assetPath);
+                    throw new FileNotFoundException(MISSING_MAC_MODULE_MESSAGE);
+                }
+                else
+                {
+                    Debug.LogWarning($"MacOS Build Support is not installed, so {fileName} has no Metal shaders and will not render on MacOS.");
                 }
 
-                clonedBackground = Instantiate(_backgroundReference.gameObject);
+                assetPaths.Add(backgroundPath);
 
-                var backgroundPath = BackgroundHelper.ExportType.Character == type ? CHARACTER_PREFAB_PATH : BACKGROUND_PREFAB_PATH;
-
-                var assetPaths = new[]
-                {
-                    Path.Combine("Assets/", metalAssetBundleName),
-                    backgroundPath
-                };
-
-                AssetBundleBuild assetBundleBuild = default;
-                assetBundleBuild.assetBundleName = fileName;
-                assetBundleBuild.assetNames = assetPaths;
+                clonedBackground = Instantiate(root);
 
                 // We must examine anything that has the VenueCharacter component so we can deal with animations
                 // properly. First we find them, then check for an AnimatorController and extract the layers and
@@ -262,6 +235,10 @@ namespace YARG.Venue
 
                 PrefabUtility.SaveAsPrefabAsset(clonedBackground.gameObject, backgroundPath);
 
+                AssetBundleBuild assetBundleBuild = default;
+                assetBundleBuild.assetBundleName = fileName;
+                assetBundleBuild.assetNames = assetPaths.ToArray();
+
                 BuildPipeline.BuildAssetBundles(Application.temporaryCachePath,
                     new[]
                     {
@@ -269,9 +246,11 @@ namespace YARG.Venue
                     }, BuildAssetBundleOptions.ForceRebuildAssetBundle,
                     BuildTarget.StandaloneWindows);
 
-                foreach (var asset in assetPaths)
+                // Unity seems to save the file in lower case, which is a problem on Linux, as file systems are case sensitive there
+                var builtPath = Path.Combine(Application.temporaryCachePath, fileName.ToLowerInvariant());
+                if (!File.Exists(builtPath))
                 {
-                    AssetDatabase.DeleteAsset(asset);
+                    throw new FileNotFoundException($"The asset bundle build did not produce {builtPath}. See console for more info.");
                 }
 
                 // If the file exists, delete it (to replace it)
@@ -280,21 +259,101 @@ namespace YARG.Venue
                     File.Delete(path);
                 }
 
-                // Unity seems to save the file in lower case, which is a problem on Linux, as file systems are case sensitive there
-                File.Move(Path.Combine(Application.temporaryCachePath, fileName.ToLowerInvariant()), path);
-
-                EditorUtility.DisplayDialog("Export Successful!", "Export Successful!", "OK");
-            }
-            catch (Exception e)
-            {
-                Debug.LogException(e);
+                File.Move(builtPath, path);
             }
             finally
             {
+                foreach (var asset in assetPaths)
+                {
+                    AssetDatabase.DeleteAsset(asset);
+                }
+
                 AssetDatabase.AllowAutoRefresh();
                 if (clonedBackground != null)
                 {
                     DestroyImmediate(clonedBackground);
+                }
+            }
+        }
+
+        private const string MISSING_MAC_MODULE_MESSAGE =
+            "MacOS Shader bundle failed to build. <a href=\"https://wiki.yarg.in/wiki/Venue_Creation\">Please ensure you have the \"MacOS Build Support (Mono)\" module installed.</a>";
+
+        // Builds the MacOS Metal shader bundle into Assets/<metalAssetBundleName>; returns false if there were no materials
+        private static bool BuildMetalShaderBundle(GameObject shaderRoot, string metalAssetBundleName)
+        {
+            // We use materials as "anchors" to make sure all required
+            // shader variants are included
+            var materialAssets = EditorUtility.CollectDependencies(new[] { shaderRoot })
+                .OfType<Material>() // Only material dependencices
+                .Select((mat, i) =>
+                {
+                    // Create a clone
+                    var matClone = new Material(mat);
+                    // Avoid name collision
+                    matClone.name = BACKGOUND_OSX_MATERIAL_PREFIX + i.ToString() + mat.name;
+                    // Drop all textures to not double resulting yarground in size
+                    if (matClone.mainTexture != null)
+                    {
+                        matClone.mainTexture = Texture2D.whiteTexture;
+                    }
+                    foreach (var id in matClone.GetTexturePropertyNameIDs())
+                    {
+                        if (matClone.GetTexture(id) != null)
+                        {
+                            matClone.SetTexture(id, Texture2D.whiteTexture);
+                        }
+                    }
+                    var assetPath = Path.Combine("Assets", matClone.name + ".mat");
+                    AssetDatabase.CreateAsset(matClone, assetPath);
+
+                    return assetPath;
+                })
+                .ToArray();
+
+            try
+            {
+                if (materialAssets.Length == 0)
+                {
+                    return false;
+                }
+
+                var shaderAssets = EditorUtility.CollectDependencies(new[] { shaderRoot })
+                    .OfType<Shader>().Select(AssetDatabase.GetAssetPath);
+
+                var metalAssetBundleBuild = default(AssetBundleBuild);
+                metalAssetBundleBuild.assetBundleName = metalAssetBundleName;
+                metalAssetBundleBuild.assetNames = materialAssets.Concat(shaderAssets).ToArray();
+
+                BuildPipeline.BuildAssetBundles(Application.temporaryCachePath,
+                    new[]
+                    {
+                        metalAssetBundleBuild
+                    }, BuildAssetBundleOptions.ForceRebuildAssetBundle,
+                    BuildTarget.StandaloneOSX);
+
+                var filePath = Path.Combine(Application.temporaryCachePath, metalAssetBundleName);
+
+                if (!File.Exists(filePath))
+                {
+                    throw new FileNotFoundException(MISSING_MAC_MODULE_MESSAGE);
+                }
+
+                var assetPath = Path.Combine(Application.dataPath, metalAssetBundleName);
+                if (File.Exists(assetPath))
+                {
+                    File.Delete(assetPath);
+                }
+                File.Move(filePath, assetPath);
+                AssetDatabase.ImportAsset(Path.Combine("Assets", metalAssetBundleName));
+                return true;
+            }
+            finally
+            {
+                // Now delete our material clones
+                foreach (var assetPath in materialAssets)
+                {
+                    AssetDatabase.DeleteAsset(assetPath);
                 }
             }
         }

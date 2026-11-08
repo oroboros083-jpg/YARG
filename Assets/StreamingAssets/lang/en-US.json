@@ -1697,6 +1697,18 @@
             "CustomVocalsCharacter": {
                 "Name": "Custom Vocals Character",
                 "Description": "Select a custom vocals character to use in venues that support characters."
+            },
+            "CustomGuitarCharacter": {
+                "Name": "Custom Guitar Character",
+                "Description": "Select a custom guitar character to use in venues that have a guitarist."
+            },
+            "CustomBassCharacter": {
+                "Name": "Custom Bass Character",
+                "Description": "Select a custom bass character to use in venues that have a bassist."
+            },
+            "CustomDrumsCharacter": {
+                "Name": "Custom Drums Character",
+                "Description": "Select a custom drums character to use in venues that have a drummer."
             }
         },
         "PresetType": {
