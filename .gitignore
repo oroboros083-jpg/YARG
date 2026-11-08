@@ -126,3 +126,6 @@ reload_lock~.meta
 
 # Unity crash dumps
 mono_crash.mem.*.blob
+
+# The fly band's baked textures are source art; the machine-wide excludes file ignores every .png
+!Assets/Authoring/Venue/Unique/FlyBand/**/*.png
