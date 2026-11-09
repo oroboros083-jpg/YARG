@@ -15,9 +15,7 @@ using YARG.Venue.VenueCamera;
 namespace YARG.Editor.FlyBand
 {
     /// <summary>
-    /// Checks a built fly the way YARG will use it: the animator has every manifest state on its layer, VenueCharacter
-    /// finds its advanced animations, the clips move the bones, and the .yargchar loads back. Renders a pose to PNG.
-    /// CheckVenue does the same for the .yarground: managers, characters on their slots, lights, cameras, and a frame.
+    /// Checks a built fly the way YARG will use it: the animator has every manifest state on its layer, VenueCharacter finds its advanced animations, the clips move the bones, and the .yargchar loads back. Renders a pose to PNG. CheckVenue does the same for the .yarground: managers, characters on their slots, lights, cameras, and a frame.
     /// </summary>
     public static class FlyBandCheck
     {
@@ -37,11 +35,8 @@ namespace YARG.Editor.FlyBand
 
         public static void CheckFromCommandLine()
         {
-            var args = Environment.GetCommandLineArgs();
-            int i = Array.IndexOf(args, "-flyManifests");
-            var dir = i >= 0 ? args[i + 1] : FlyBandBuilder.DEFAULT_MANIFEST_DIR;
-            int o = Array.IndexOf(args, "-flyOut");
-            var outDir = o >= 0 ? args[o + 1] : dir;
+            var dir = FlyBandBuilder.GetArg("-flyManifests") ?? FlyBandBuilder.DEFAULT_MANIFEST_DIR;
+            var outDir = FlyBandBuilder.GetArg("-flyOut") ?? dir;
             EditorApplication.Exit(CheckAll(dir, outDir) ? 0 : 2);
         }
 
@@ -78,8 +73,14 @@ namespace YARG.Editor.FlyBand
                 return false;
             }
 
-            var controller = prefab.GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+            var prefabAnimator = prefab.GetComponent<Animator>();
+            var controller = prefabAnimator != null ? prefabAnimator.runtimeAnimatorController as AnimatorController : null;
             Expect(controller != null, "animator has an AnimatorController");
+            if (controller == null)
+            {
+                return false;
+            }
+
             Expect(controller.animationClips.Length > 0 && controller.animationClips[0].name == "Playing",
                 $"animationClips[0] is Playing (it is {controller.animationClips.FirstOrDefault()?.name})");
 
@@ -134,8 +135,7 @@ namespace YARG.Editor.FlyBand
             Expect(Mathf.Abs(timeToFirstHit - manifest.ImpactFrame / clipFps) < 1e-3f,
                 $"TimeToFirstHit {timeToFirstHit:F3}s = impact_frame / clip fps");
 
-            // The clips move the bones: sample each at its impact frame (or mid-clip) and compare with the bind pose
-            // and with Idle's first frame (a hold may equal one of them, never both)
+            // The clips move the bones: sample each at its impact frame (or mid-clip) and compare with the bind pose and with Idle's first frame (a hold may equal one of them, never both)
             var clips = controller.animationClips.ToDictionary(c => c.name);
             clips["Idle"].SampleAnimation(instance, 0f);
             var idle = CapturePose(instance);
@@ -195,14 +195,18 @@ namespace YARG.Editor.FlyBand
                             var loadedAnimator = copy.GetComponent<Animator>();
                             Expect(loadedCharacter != null && loadedCharacter.Type == character.Type,
                                 $"bundled VenueCharacter type {loadedCharacter?.Type}");
-                            Expect(loadedAnimator.runtimeAnimatorController != null &&
+                            Expect(loadedAnimator != null && loadedAnimator.runtimeAnimatorController != null &&
                                 loadedAnimator.runtimeAnimatorController.animationClips.Length == manifest.States.Count,
-                                $"bundled controller has {loadedAnimator.runtimeAnimatorController?.animationClips.Length} clips");
-                            loadedAnimator.Rebind();
-                            loadedAnimator.Update(0f);
-                            loadedCharacter.Initialize(null);
-                            bool bundledAdvanced = (bool) typeof(VenueCharacter).GetField("_hasAdvancedAnimations", flags).GetValue(loadedCharacter);
-                            Expect(bundledAdvanced, "bundled character has advanced animations");
+                                $"bundled controller has {(loadedAnimator != null && loadedAnimator.runtimeAnimatorController != null ? loadedAnimator.runtimeAnimatorController.animationClips.Length : 0)} clips");
+                            if (loadedCharacter != null && loadedAnimator != null)
+                            {
+                                loadedAnimator.Rebind();
+                                loadedAnimator.Update(0f);
+                                loadedCharacter.Initialize(null);
+                                bool bundledAdvanced = (bool) typeof(VenueCharacter).GetField("_hasAdvancedAnimations", flags).GetValue(loadedCharacter);
+                                Expect(bundledAdvanced, "bundled character has advanced animations");
+                            }
+
                             int renderers = copy.GetComponentsInChildren<SkinnedMeshRenderer>().Length;
                             var mats = copy.GetComponentsInChildren<Renderer>().SelectMany(r => r.sharedMaterials).Select(m => m ? $"{m.name}({m.shader.name})" : "null");
                             Expect(renderers > 0, $"bundled skinned renderers {renderers}, materials {string.Join(", ", mats)}");

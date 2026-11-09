@@ -20,9 +20,7 @@ using Subject = YARG.Core.Chart.CameraCutEvent.CameraCutSubject;
 namespace YARG.Editor.FlyBand
 {
     /// <summary>
-    /// The venue half of the fly band build: turns venue.py's stage export (stage.json, stage.fbx and its baked
-    /// textures) into a .yarground with YARG's light, camera and character managers and the three fly prefabs on
-    /// their slot markers.
+    /// The venue half of the fly band build: turns venue.py's stage export (stage.json, stage.fbx and its baked textures) into a .yarground with YARG's light, camera and character managers and the three fly prefabs on their slot markers.
     /// </summary>
     public static partial class FlyBandBuilder
     {
@@ -33,9 +31,7 @@ namespace YARG.Editor.FlyBand
 
         private const string EXAMPLE_VENUE_SCENE = "Assets/Authoring/Venue/VenueCreation.unity";
 
-        // Blender's radiometric watts to URP intensity. A Cycles point or spot of P watts has radiant intensity
-        // P / 4pi W/sr, and Cycles' diffuse BSDF divides by pi where URP's Lambert does not, so URP gets P / (4 pi^2).
-        // Emission maps 1:1 (Blender emission strength 1 = URP emission 1), which this keeps consistent.
+        // Blender's radiometric watts to URP intensity. A Cycles point or spot of P watts has radiant intensity P / 4pi W/sr, and Cycles' diffuse BSDF divides by pi where URP's Lambert does not, so URP gets P / (4 pi^2). Emission maps 1:1 (Blender emission strength 1 = URP emission 1), which this keeps consistent.
         public const float WATTS_TO_URP_POINT = 1f / (4f * Mathf.PI * Mathf.PI);
 
         // A Lambertian area light of P watts has on-axis intensity P / pi W/sr, so URP gets P / pi^2
@@ -46,8 +42,7 @@ namespace YARG.Editor.FlyBand
 
         private const float LIGHT_RANGE = 40f;
 
-        // URP's forward renderer lights each object with at most 8 additional lights (4 on Low quality), and the
-        // stage has 13, so the stage mesh is cut into tiles that each pick their own nearest lights
+        // URP's forward renderer lights each object with at most 8 additional lights (4 on Low quality), and the stage has 13, so the stage mesh is cut into tiles that each pick their own nearest lights
         private const int STAGE_TILES_X = 4;
         private const int STAGE_TILES_Z = 3;
 
@@ -62,6 +57,12 @@ namespace YARG.Editor.FlyBand
         {
             var json = EditorUtility.OpenFilePanel("Fly band stage.json", DEFAULT_MANIFEST_DIR, "json");
             if (string.IsNullOrEmpty(json))
+            {
+                return;
+            }
+
+            // BuildVenue replaces the open scenes with an empty one, so unsaved edits get the chance to be saved first
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
             {
                 return;
             }
@@ -526,9 +527,7 @@ namespace YARG.Editor.FlyBand
         }
 
         /// <summary>
-        /// The Unity yaw of a slot marker, taken from its axes rather than its Euler angles so it does not depend on
-        /// how the FBX importer converts axes: the marker's local axis nearest world up is its up, and the
-        /// horizontal axis nearest +Z (the audience side; every slot faces within 45 degrees of it) is its facing.
+        /// The Unity yaw of a slot marker, taken from its axes rather than its Euler angles so it does not depend on how the FBX importer converts axes: the marker's local axis nearest world up is its up, and the horizontal axis nearest +Z (the audience side; every slot faces within 45 degrees of it) is its facing.
         /// </summary>
         public static float SlotYaw(Transform marker)
         {

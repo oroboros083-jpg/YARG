@@ -24,11 +24,12 @@ namespace YARG.Settings.Preview
 
             var vrmInstance = character.GetComponent<Vrm10Instance>();
 
-            // A plain character has no VRM meta, so it is named after its file and has no author
+            // Named the way the dropdown names it, so a plain character or a VRM without a name shows its file name
+            _characterName.SetText(CustomCharacterSetting.GetDisplayName(vrmInstance,
+                CharacterPreviewBuilder.CharacterFile ?? string.Empty));
+
             if (vrmInstance == null || vrmInstance.Vrm == null || vrmInstance.Vrm.Meta == null)
             {
-                _characterName.SetText(CustomCharacterSetting.GetDisplayName(vrmInstance,
-                    CharacterPreviewBuilder.CharacterFile ?? string.Empty));
                 _characterAuthor.SetText(string.Empty);
                 return;
             }
@@ -42,7 +43,6 @@ namespace YARG.Settings.Preview
                 _ => string.Join(", ", authors)
             };
 
-            _characterName.SetText(vrmInstance.Vrm.Meta.Name);
             _characterAuthor.SetText(author);
         }
 

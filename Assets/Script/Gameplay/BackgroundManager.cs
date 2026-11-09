@@ -503,21 +503,22 @@ namespace YARG.Gameplay
         private async UniTask LoadCustomCharacters(GameObject venueRoot)
         {
             var settings = SettingsManager.Settings;
-            string[] characterPaths =
+            (string path, VenueCharacter.CharacterType type)[] slots =
             {
-                settings.CustomVocalsCharacter.Value,
-                settings.CustomGuitarCharacter.Value,
-                settings.CustomBassCharacter.Value,
-                settings.CustomDrumsCharacter.Value,
+                (settings.CustomVocalsCharacter.Value, VenueCharacter.CharacterType.Vocals),
+                (settings.CustomGuitarCharacter.Value, VenueCharacter.CharacterType.Guitar),
+                (settings.CustomBassCharacter.Value, VenueCharacter.CharacterType.Bass),
+                (settings.CustomDrumsCharacter.Value, VenueCharacter.CharacterType.Drums),
             };
 
-            foreach (var characterPath in characterPaths)
+            foreach (var (characterPath, slotType) in slots)
             {
-                await LoadCustomCharacter(venueRoot, characterPath);
+                await LoadCustomCharacter(venueRoot, characterPath, slotType);
             }
         }
 
-        private async UniTask LoadCustomCharacter(GameObject venueRoot, string characterPath)
+        private async UniTask LoadCustomCharacter(GameObject venueRoot, string characterPath,
+            VenueCharacter.CharacterType slotType)
         {
             if (string.IsNullOrEmpty(characterPath))
             {
@@ -540,6 +541,21 @@ namespace YARG.Gameplay
                 return;
             }
 
+            var newVenueCharacter = character.GetComponent<VenueCharacter>();
+            if (newVenueCharacter == null)
+            {
+                YargLogger.LogFormatError("Character in {0} has no VenueCharacter component", characterPath);
+                return;
+            }
+
+            // A saved setting is not checked against its dropdown's list, so a file of another type would otherwise replace another bandmate
+            var newType = newVenueCharacter.Type;
+            if (newType != slotType)
+            {
+                YargLogger.LogFormatError("Character in {0} is a {1} character, not {2}; skipped", characterPath, newType, slotType);
+                return;
+            }
+
             // Load Metal shaders
             var shaderBundle = await BackgroundHelper.LoadMetalShaders(bundle, character, BackgroundHelper.ExportType.Character);
             if (shaderBundle != null)
@@ -550,14 +566,6 @@ namespace YARG.Gameplay
             // Load default animation controller and parameters if necessary
             LoadAnimationDefaults(character);
 
-            var newVenueCharacter = character.GetComponent<VenueCharacter>();
-            if (newVenueCharacter == null)
-            {
-                YargLogger.LogFormatError("Character in {0} has no VenueCharacter component", characterPath);
-                return;
-            }
-
-            var newType = newVenueCharacter.Type;
             // Find a character of the same type in venueRoot
             GameObject existingCharacter = null;
 
@@ -582,9 +590,8 @@ namespace YARG.Gameplay
 
             var newCharacter = Instantiate(character, existingParent);
 
-            // A plain (non-VRM) character stands where the one it replaces stood, and its prefab root rotation
-            // is kept as an offset so a model can be turned to face the audience. VRM characters keep their
-            // original placement so existing vocalist venues look the same.
+            // A plain (non-VRM) character stands where the one it replaces stood, and its prefab root rotation is kept as an offset so a model can be turned to face the audience.
+            // VRM characters keep their original placement so existing vocalist venues look the same.
             if (newCharacter.GetComponent<VRMCharacter>() == null)
             {
                 var existingTransform = existingCharacter.transform;

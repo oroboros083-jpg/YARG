@@ -15,13 +15,9 @@ using AnimationStateType = YARG.Venue.Characters.VenueCharacter.AnimationStateTy
 namespace YARG.Editor.FlyBand
 {
     /// <summary>
-    /// Turns the fly band's Blender exports (fly_&lt;slot&gt;.json manifest, .fbx, albedo and mask .png) into
-    /// VenueCharacter prefabs and exports each as a .yargchar; with -flyVenue it also builds the stage around them
-    /// into flyband.yarground (FlyBandBuilder.Venue.cs).
+    /// Turns the fly band's Blender exports (fly_&lt;slot&gt;.json manifest, .fbx, albedo and mask .png) into VenueCharacter prefabs and exports each as a .yargchar; with -flyVenue it also builds the stage around them into flyband.yarground (FlyBandBuilder.Venue.cs).
     ///
-    /// Batch: Unity.exe -batchmode -projectPath &lt;project&gt; -executeMethod YARG.Editor.FlyBand.FlyBandBuilder.BuildFromCommandLine
-    ///        -flyManifests &lt;folder of fly_*.json&gt; [-flyOut &lt;folder for .yargchar and .yarground&gt;]
-    ///        [-flyVenue &lt;stage.json&gt;] [-flyCheck]
+    /// Batch: Unity.exe -batchmode -projectPath &lt;project&gt; -executeMethod YARG.Editor.FlyBand.FlyBandBuilder.BuildFromCommandLine -flyManifests &lt;folder of fly_*.json&gt; [-flyOut &lt;folder for .yargchar and .yarground&gt;] [-flyVenue &lt;stage.json&gt;] [-flyCheck]
     /// </summary>
     public static partial class FlyBandBuilder
     {
@@ -497,8 +493,7 @@ namespace YARG.Editor.FlyBand
                 PrefabUtility.UnpackPrefabInstance(instance, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
                 instance.name = $"fly_{manifest.Slot}";
 
-                // The FBX keeps the character facing Unity +Z, the way VRM bandmates face, so the root needs no turn.
-                // BackgroundManager keeps this root rotation as an offset, so a model that faces away can be fixed here.
+                // The FBX keeps the character facing Unity +Z, the way VRM bandmates face, so the root needs no turn. BackgroundManager keeps this root rotation as an offset, so a model that faces away can be fixed here.
                 instance.transform.localPosition = Vector3.zero;
                 instance.transform.localRotation = Quaternion.identity;
 
@@ -674,7 +669,7 @@ namespace YARG.Editor.FlyBand
             }
         }
 
-        private static string GetArg(string name)
+        internal static string GetArg(string name)
         {
             var args = Environment.GetCommandLineArgs();
             var index = Array.IndexOf(args, name);

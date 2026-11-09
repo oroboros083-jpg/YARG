@@ -146,15 +146,13 @@ namespace YARG.Venue
         }
 
         /// <summary>
-        /// Builds <paramref name="root"/> into a .yargchar or .yarground at <paramref name="path"/> without any
-        /// dialogs, so batch-mode tools can call it. Throws on failure.
+        /// Builds <paramref name="root"/> into a .yargchar or .yarground at <paramref name="path"/> without any dialogs, so batch-mode tools can call it. Throws on failure.
         /// </summary>
         /// <param name="shaderRoot">
         /// The object whose materials anchor the MacOS Metal shader bundle; defaults to <paramref name="root"/>.
         /// </param>
         /// <param name="requireMetalShaders">
-        /// When false, a missing MacOS build module skips the Metal shader bundle with a warning (the export then
-        /// renders everywhere but MacOS) instead of failing.
+        /// When false, a missing MacOS build module skips the Metal shader bundle with a warning (the export then renders everywhere but MacOS) instead of failing.
         /// </param>
         public static void ExportBundle(GameObject root, BackgroundHelper.ExportType type, string path,
             GameObject shaderRoot = null, bool requireMetalShaders = false)

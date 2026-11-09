@@ -11,7 +11,6 @@ namespace YARG.Settings.Preview
         private Transform _characterContainer;
 
         private Vrm10Instance _vrmInstance;
-        private VRMCharacter  _vrmCharacter;
         private GameObject    _character; // The instance, not the prefab loaded from the AssetBundle
 
         private Animator _animator;
@@ -26,11 +25,9 @@ namespace YARG.Settings.Preview
 
             _character = characterInstance;
 
-            // Plain (non-VRM) characters preview too
+            // Plain (non-VRM) characters preview too; Initialize reads the Animator, so a character without one previews unanimated
             var venueCharacter = characterInstance.GetComponent<VenueCharacter>();
-            _vrmCharacter = venueCharacter as VRMCharacter;
-
-            if (venueCharacter != null)
+            if (venueCharacter != null && venueCharacter.GetComponent<Animator>() != null)
             {
                 venueCharacter.Initialize(null);
                 venueCharacter.SetPreviewIdle();
