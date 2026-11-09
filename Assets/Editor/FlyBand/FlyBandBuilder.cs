@@ -16,12 +16,14 @@ namespace YARG.Editor.FlyBand
 {
     /// <summary>
     /// Turns the fly band's Blender exports (fly_&lt;slot&gt;.json manifest, .fbx, albedo and mask .png) into
-    /// VenueCharacter prefabs and exports each as a .yargchar.
+    /// VenueCharacter prefabs and exports each as a .yargchar; with -flyVenue it also builds the stage around them
+    /// into flyband.yarground (FlyBandBuilder.Venue.cs).
     ///
     /// Batch: Unity.exe -batchmode -projectPath &lt;project&gt; -executeMethod YARG.Editor.FlyBand.FlyBandBuilder.BuildFromCommandLine
-    ///        -flyManifests &lt;folder of fly_*.json&gt; [-flyOut &lt;folder for .yargchar&gt;] [-flyCheck]
+    ///        -flyManifests &lt;folder of fly_*.json&gt; [-flyOut &lt;folder for .yargchar and .yarground&gt;]
+    ///        [-flyVenue &lt;stage.json&gt;] [-flyCheck]
     /// </summary>
-    public static class FlyBandBuilder
+    public static partial class FlyBandBuilder
     {
         public const string ASSET_ROOT = "Assets/Authoring/Venue/Unique/FlyBand";
         public const string DEFAULT_MANIFEST_DIR = @"P:\output\flyband\yarg";
@@ -57,6 +59,7 @@ namespace YARG.Editor.FlyBand
         {
             var manifestDir = GetArg("-flyManifests") ?? DEFAULT_MANIFEST_DIR;
             var outDir = GetArg("-flyOut") ?? manifestDir;
+            var venueManifest = GetArg("-flyVenue");
             bool check = Environment.GetCommandLineArgs().Contains("-flyCheck");
 
             int exitCode = 0;
@@ -65,9 +68,22 @@ namespace YARG.Editor.FlyBand
                 var built = Build(manifestDir, outDir);
                 Debug.Log("[FlyBand] Built " + string.Join(", ", built));
 
+                // The venue places the character prefabs just built, so it always comes after them
+                string venuePath = null;
+                if (venueManifest != null)
+                {
+                    venuePath = Path.Combine(outDir, VENUE_FILE_NAME);
+                    BuildVenue(venueManifest, venuePath);
+                }
+
                 if (check)
                 {
-                    exitCode = FlyBandCheck.CheckAll(manifestDir, outDir) ? 0 : 2;
+                    bool ok = FlyBandCheck.CheckAll(manifestDir, outDir);
+                    if (venuePath != null)
+                    {
+                        ok &= FlyBandCheck.CheckVenue(venueManifest, venuePath);
+                    }
+                    exitCode = ok ? 0 : 2;
                 }
             }
             catch (Exception e)

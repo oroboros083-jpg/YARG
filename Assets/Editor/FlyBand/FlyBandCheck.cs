@@ -7,14 +7,17 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
 using YARG.Venue;
 using YARG.Venue.Characters;
+using YARG.Venue.VenueCamera;
 
 namespace YARG.Editor.FlyBand
 {
     /// <summary>
     /// Checks a built fly the way YARG will use it: the animator has every manifest state on its layer, VenueCharacter
     /// finds its advanced animations, the clips move the bones, and the .yargchar loads back. Renders a pose to PNG.
+    /// CheckVenue does the same for the .yarground: managers, characters on their slots, lights, cameras, and a frame.
     /// </summary>
     public static class FlyBandCheck
     {
@@ -215,6 +218,248 @@ namespace YARG.Editor.FlyBand
 
             Debug.Log($"[FlyCheck] {manifest.Slot}: {(failures.Count == 0 ? "OK" : "FAILED: " + string.Join("; ", failures))}");
             return failures.Count == 0;
+        }
+
+        // How far a light or camera may point from what venue.py aimed it at
+        private const float KEY_AIM_DEGREES = 3f;
+        private const float CAMERA_AIM_DEGREES = 15f;
+
+        // venue.py aims each key light at its slot 1.2 m up, and band.py frames the cameras about 1.3 m up
+        private const float KEY_TARGET_HEIGHT = 1.2f;
+        private const float CAMERA_TARGET_HEIGHT = 1.3f;
+
+        /// <summary>Loads the .yarground back the way BackgroundManager does and checks what YARG will look for.</summary>
+        public static bool CheckVenue(string stageJson, string venuePath)
+        {
+            var manifest = StageManifest.Load(stageJson);
+            var failures = new List<string>();
+            void Expect(bool condition, string what)
+            {
+                Debug.Log($"[FlyCheck] venue: {(condition ? "PASS" : "FAIL")} {what}");
+                if (!condition)
+                {
+                    failures.Add(what);
+                }
+            }
+
+            EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+
+            bool exists = File.Exists(venuePath);
+            Expect(exists, $"{venuePath} exists ({(exists ? new FileInfo(venuePath).Length : 0)} bytes)");
+            var bundle = exists ? AssetBundle.LoadFromFile(venuePath) : null;
+            Expect(bundle != null, "bundle loads");
+            if (bundle == null)
+            {
+                return false;
+            }
+
+            try
+            {
+                var bg = bundle.LoadAsset<GameObject>(BundleBackgroundManager.BACKGROUND_PREFAB_PATH.ToLowerInvariant());
+                Expect(bg != null, $"bundle has {BundleBackgroundManager.BACKGROUND_PREFAB_PATH}");
+                if (bg == null)
+                {
+                    return false;
+                }
+
+                var venue = UnityEngine.Object.Instantiate(bg);
+                var nodes = venue.GetComponentsInChildren<Transform>(true)
+                    .GroupBy(t => t.name)
+                    .ToDictionary(g => g.Key, g => g.First());
+
+                // Managers
+                var bundleManager = venue.GetComponent<BundleBackgroundManager>();
+                Expect(bundleManager != null, "root has BundleBackgroundManager");
+                var mainCamera = bundleManager != null ? Serialized(bundleManager, "mainCamera") as Camera : null;
+                Expect(mainCamera != null, $"BundleBackgroundManager.mainCamera is set ({(mainCamera ? mainCamera.name : "none")})");
+
+                var characterManager = venue.GetComponentInChildren<CharacterManager>(true);
+                Expect(characterManager != null && Serialized(characterManager, "_venue") == venue,
+                    "CharacterManager whose _venue is the root");
+                var cameraManager = venue.GetComponentInChildren<CameraManager>(true);
+                Expect(cameraManager != null && Serialized(cameraManager, "_venue") == venue,
+                    "CameraManager whose _venue is the root");
+                var lightManager = venue.GetComponentInChildren<LightManager>(true);
+                Expect(lightManager != null, "LightManager");
+
+                // Characters, each on its slot marker
+                var characters = venue.GetComponentsInChildren<VenueCharacter>(true);
+                var types = characters.Select(c => c.Type).OrderBy(t => t).ToList();
+                var wanted = new[]
+                {
+                    VenueCharacter.CharacterType.Guitar, VenueCharacter.CharacterType.Bass, VenueCharacter.CharacterType.Drums
+                }.OrderBy(t => t);
+                Expect(characters.Length == 3 && types.SequenceEqual(wanted), $"3 characters: {string.Join(", ", types)}");
+
+                var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                foreach (var character in characters)
+                {
+                    var slot = character.Type.ToString().ToLowerInvariant();
+                    var animator = character.GetComponent<Animator>();
+                    Expect(animator != null && animator.runtimeAnimatorController != null, $"{slot} has an animator controller");
+                    if (animator == null)
+                    {
+                        continue;
+                    }
+
+                    animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+                    animator.Rebind();
+                    animator.Update(0f);
+                    character.Initialize(null);
+                    bool advanced = (bool) typeof(VenueCharacter).GetField("_hasAdvancedAnimations", flags).GetValue(character);
+                    Expect(advanced, $"{slot} has advanced animations");
+
+                    if (nodes.TryGetValue($"slot_{slot}", out var marker))
+                    {
+                        float off = (character.transform.position - marker.position).magnitude;
+                        Expect(off < 0.01f, $"{slot} stands on slot_{slot} at {marker.position:F2} (off by {off * 1000f:F0} mm), " +
+                            $"yaw {character.transform.eulerAngles.y:F1}");
+                    }
+                    else
+                    {
+                        Expect(false, $"venue has slot_{slot}");
+                    }
+                }
+
+                // Lights: every stage.json light, as a VenueLight with its converted intensity, keys on their slots
+                var lights = venue.GetComponentsInChildren<Light>(true);
+                Expect(lights.Length == manifest.Lights.Count, $"{lights.Length} lights (stage.json has {manifest.Lights.Count})");
+                foreach (var light in lights)
+                {
+                    bool known = manifest.Lights.TryGetValue(light.name, out var info);
+                    Expect(known, $"light {light.name} is in stage.json");
+                    if (!known)
+                    {
+                        continue;
+                    }
+
+                    float factor = info.Type == "AREA" ? FlyBandBuilder.WATTS_TO_URP_AREA : FlyBandBuilder.WATTS_TO_URP_POINT;
+                    var venueLight = light.GetComponent<VenueLight>();
+                    var location = venueLight != null ? venueLight.Location.ToString() : "none";
+                    Expect(venueLight != null && venueLight.Location == FlyBandBuilder.LightLocationFor(light.name),
+                        $"light {light.name} is a VenueLight in {location}");
+                    Expect(Mathf.Abs(light.intensity - info.Watts * factor) < 1e-3f * light.intensity + 1e-4f,
+                        $"light {light.name} intensity {light.intensity:F1} from {info.Watts} W");
+                }
+
+                foreach (var slot in manifest.Slots)
+                {
+                    if (nodes.TryGetValue($"key_{slot}", out var key) && nodes.TryGetValue($"slot_{slot}", out var marker))
+                    {
+                        float angle = Vector3.Angle(key.forward, marker.position + Vector3.up * KEY_TARGET_HEIGHT - key.position);
+                        Expect(angle < KEY_AIM_DEGREES, $"key_{slot} aims at its slot ({angle:F1} deg off)");
+                    }
+                }
+
+                // Cameras: every stage.json camera, as a VenueCamera, aimed at the band
+                var cameras = venue.GetComponentsInChildren<VenueCamera>(true);
+                Expect(cameras.Length == manifest.Cameras.Count, $"{cameras.Length} venue cameras (stage.json has {manifest.Cameras.Count})");
+                Expect(cameras.Count(c => c.CameraLocation == CameraManager.CameraLocation.Stage) == 1, "one Stage camera");
+                var markers = manifest.Slots.Where(s => nodes.ContainsKey($"slot_{s}")).Select(s => nodes[$"slot_{s}"].position).ToList();
+                var slotCentre = markers.Aggregate(Vector3.zero, (a, b) => a + b) / Mathf.Max(1, markers.Count);
+                foreach (var venueCamera in cameras)
+                {
+                    var camera = venueCamera.GetComponent<Camera>();
+                    bool known = manifest.Cameras.TryGetValue(venueCamera.name, out var info);
+                    Expect(known && Mathf.Abs(camera.fieldOfView - FlyBandBuilder.VerticalFov(info.LensMm, info.SensorMm)) < 0.01f,
+                        $"camera {venueCamera.name} vertical fov {camera.fieldOfView:F1}");
+
+                    var subject = venueCamera.name.Replace("cam_", string.Empty).Replace("_close", string.Empty);
+                    var target = nodes.TryGetValue($"slot_{subject}", out var marker) ? marker.position : slotCentre;
+                    float angle = Vector3.Angle(venueCamera.transform.forward,
+                        target + Vector3.up * CAMERA_TARGET_HEIGHT - venueCamera.transform.position);
+                    Expect(angle < CAMERA_AIM_DEGREES, $"camera {venueCamera.name} aims at {subject} ({angle:F1} deg off)");
+                }
+
+                // Renderers: the fixtures enclose their spots, so they cast no shadows; everything is on the Venue layer
+                var fixtures = venue.GetComponentsInChildren<Renderer>(true).Where(r => manifest.NoShadowMeshes.Contains(r.name)).ToList();
+                Expect(fixtures.Count == manifest.NoShadowMeshes.Count && fixtures.All(r => r.shadowCastingMode == ShadowCastingMode.Off),
+                    $"{string.Join(", ", manifest.NoShadowMeshes)} cast no shadows ({string.Join(", ", fixtures.Select(r => $"{r.name}: {r.shadowCastingMode}"))})");
+
+                int venueLayer = LayerMask.NameToLayer(FlyBandBuilder.VENUE_LAYER);
+                var offLayer = venue.GetComponentsInChildren<Transform>(true).Where(t => t.gameObject.layer != venueLayer).ToList();
+                Expect(offLayer.Count == 0, $"every object is on the {FlyBandBuilder.VENUE_LAYER} layer ({offLayer.Count} are not)");
+
+                var stageRenderers = nodes.TryGetValue("stage", out var stageNode)
+                    ? stageNode.GetComponentsInChildren<MeshRenderer>(true)
+                    : Array.Empty<MeshRenderer>();
+                var stageBounds = new Bounds();
+                for (int i = 0; i < stageRenderers.Length; i++)
+                {
+                    if (i == 0) stageBounds = stageRenderers[i].bounds;
+                    else stageBounds.Encapsulate(stageRenderers[i].bounds);
+                }
+                Expect(stageRenderers.Length > 1 && stageBounds.size.x > 10f && stageBounds.size.x < 16f,
+                    $"stage is {stageRenderers.Length} tiles spanning {stageBounds.size:F2} m (venue.py's deck is 13 m wide)");
+                var materials = stageRenderers.Select(r => r.sharedMaterial).Where(m => m != null).Distinct()
+                    .Select(m => $"{m.name}({m.shader.name}, emission {m.IsKeywordEnabled("_EMISSION")})");
+                Debug.Log($"[FlyCheck] venue: stage materials {string.Join(", ", materials)}");
+
+                if (mainCamera != null)
+                {
+                    RenderVenue(venue, mainCamera, Path.Combine(RENDER_DIR, "venue_wide.png"));
+                }
+
+                UnityEngine.Object.DestroyImmediate(venue);
+            }
+            finally
+            {
+                bundle.Unload(true);
+            }
+
+            Debug.Log($"[FlyCheck] venue: {(failures.Count == 0 ? "OK" : "FAILED: " + string.Join("; ", failures))}");
+            return failures.Count == 0;
+        }
+
+        private static UnityEngine.Object Serialized(UnityEngine.Object target, string field)
+        {
+            return new SerializedObject(target).FindProperty(field)?.objectReferenceValue;
+        }
+
+        // One frame from the venue's own camera, with the bandmates in their Playing loop
+        private static void RenderVenue(GameObject venue, Camera camera, string path)
+        {
+            try
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+
+                foreach (var animator in venue.GetComponentsInChildren<Animator>(true))
+                {
+                    animator.Play("Playing", 0, 0f);
+                    animator.Update(0f);
+                    animator.Update(0.3f);
+                }
+
+                // band.py's world is nearly black, so the venue gets next to no ambient light either
+                RenderSettings.skybox = null;
+                RenderSettings.ambientMode = AmbientMode.Flat;
+                RenderSettings.ambientLight = new Color(0.002f, 0.002f, 0.004f).gamma;
+
+                var rt = new RenderTexture(1280, 720, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
+                camera.targetTexture = rt;
+                camera.enabled = true;
+                camera.Render();
+
+                RenderTexture.active = rt;
+                var tex = new Texture2D(rt.width, rt.height, TextureFormat.RGB24, false);
+                tex.ReadPixels(new Rect(0, 0, rt.width, rt.height), 0, 0);
+                tex.Apply();
+                RenderTexture.active = null;
+
+                var pixels = tex.GetPixels();
+                float mean = pixels.Average(p => p.grayscale);
+                float lit = pixels.Count(p => p.grayscale > 0.1f) / (float) pixels.Length;
+                File.WriteAllBytes(path, tex.EncodeToPNG());
+                Debug.Log($"[FlyCheck] venue: rendered {path} (mean grey {mean:F3}, {lit:P0} of pixels above 0.1)");
+
+                UnityEngine.Object.DestroyImmediate(tex);
+                camera.targetTexture = null;
+                rt.Release();
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning($"[FlyCheck] venue: render skipped: {e}");
+            }
         }
 
         private static Dictionary<Transform, (Vector3 pos, Quaternion rot)> CapturePose(GameObject root)
