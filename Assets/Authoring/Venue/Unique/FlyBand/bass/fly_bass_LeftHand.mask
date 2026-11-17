@@ -35,6 +35,646 @@ AvatarMask:
     m_Weight: 0
   - m_Path: rig/root/pelvis/chest/head
     m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair00_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair00_0/hair00_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair00_0/hair00_1/hair00_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair00_0/hair00_1/hair00_2/hair00_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair01_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair01_0/hair01_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair01_0/hair01_1/hair01_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair01_0/hair01_1/hair01_2/hair01_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair02_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair02_0/hair02_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair02_0/hair02_1/hair02_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair02_0/hair02_1/hair02_2/hair02_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair03_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair03_0/hair03_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair03_0/hair03_1/hair03_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair03_0/hair03_1/hair03_2/hair03_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair04_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair04_0/hair04_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair04_0/hair04_1/hair04_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair04_0/hair04_1/hair04_2/hair04_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair05_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair05_0/hair05_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair05_0/hair05_1/hair05_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair05_0/hair05_1/hair05_2/hair05_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair06_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair06_0/hair06_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair06_0/hair06_1/hair06_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair06_0/hair06_1/hair06_2/hair06_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair07_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair07_0/hair07_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair07_0/hair07_1/hair07_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair07_0/hair07_1/hair07_2/hair07_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair08_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair08_0/hair08_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair08_0/hair08_1/hair08_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair08_0/hair08_1/hair08_2/hair08_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair09_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair09_0/hair09_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair09_0/hair09_1/hair09_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair09_0/hair09_1/hair09_2/hair09_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair10_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair10_0/hair10_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair10_0/hair10_1/hair10_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair10_0/hair10_1/hair10_2/hair10_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair11_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair11_0/hair11_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair11_0/hair11_1/hair11_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair11_0/hair11_1/hair11_2/hair11_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair12_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair12_0/hair12_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair12_0/hair12_1/hair12_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair12_0/hair12_1/hair12_2/hair12_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair13_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair13_0/hair13_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair13_0/hair13_1/hair13_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair13_0/hair13_1/hair13_2/hair13_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair14_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair14_0/hair14_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair14_0/hair14_1/hair14_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair14_0/hair14_1/hair14_2/hair14_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair15_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair15_0/hair15_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair15_0/hair15_1/hair15_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair15_0/hair15_1/hair15_2/hair15_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair16_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair16_0/hair16_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair16_0/hair16_1/hair16_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair16_0/hair16_1/hair16_2/hair16_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair17_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair17_0/hair17_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair17_0/hair17_1/hair17_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair17_0/hair17_1/hair17_2/hair17_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair18_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair18_0/hair18_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair18_0/hair18_1/hair18_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair18_0/hair18_1/hair18_2/hair18_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair19_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair19_0/hair19_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair19_0/hair19_1/hair19_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair19_0/hair19_1/hair19_2/hair19_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair20_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair20_0/hair20_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair20_0/hair20_1/hair20_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair20_0/hair20_1/hair20_2/hair20_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair21_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair21_0/hair21_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair21_0/hair21_1/hair21_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair21_0/hair21_1/hair21_2/hair21_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair22_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair22_0/hair22_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair22_0/hair22_1/hair22_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair22_0/hair22_1/hair22_2/hair22_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair23_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair23_0/hair23_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair23_0/hair23_1/hair23_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair23_0/hair23_1/hair23_2/hair23_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair24_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair24_0/hair24_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair24_0/hair24_1/hair24_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair24_0/hair24_1/hair24_2/hair24_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair25_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair25_0/hair25_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair25_0/hair25_1/hair25_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair25_0/hair25_1/hair25_2/hair25_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair26_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair26_0/hair26_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair26_0/hair26_1/hair26_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair26_0/hair26_1/hair26_2/hair26_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair27_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair27_0/hair27_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair27_0/hair27_1/hair27_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair27_0/hair27_1/hair27_2/hair27_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair28_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair28_0/hair28_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair28_0/hair28_1/hair28_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair28_0/hair28_1/hair28_2/hair28_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair29_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair29_0/hair29_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair29_0/hair29_1/hair29_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair29_0/hair29_1/hair29_2/hair29_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair30_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair30_0/hair30_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair30_0/hair30_1/hair30_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair30_0/hair30_1/hair30_2/hair30_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair31_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair31_0/hair31_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair31_0/hair31_1/hair31_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair31_0/hair31_1/hair31_2/hair31_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair32_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair32_0/hair32_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair32_0/hair32_1/hair32_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair32_0/hair32_1/hair32_2/hair32_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair33_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair33_0/hair33_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair33_0/hair33_1/hair33_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair33_0/hair33_1/hair33_2/hair33_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair34_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair34_0/hair34_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair34_0/hair34_1/hair34_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair34_0/hair34_1/hair34_2/hair34_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair35_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair35_0/hair35_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair35_0/hair35_1/hair35_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair35_0/hair35_1/hair35_2/hair35_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair36_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair36_0/hair36_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair36_0/hair36_1/hair36_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair36_0/hair36_1/hair36_2/hair36_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair37_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair37_0/hair37_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair37_0/hair37_1/hair37_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair37_0/hair37_1/hair37_2/hair37_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair38_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair38_0/hair38_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair38_0/hair38_1/hair38_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair38_0/hair38_1/hair38_2/hair38_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair39_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair39_0/hair39_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair39_0/hair39_1/hair39_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair39_0/hair39_1/hair39_2/hair39_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair40_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair40_0/hair40_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair40_0/hair40_1/hair40_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair40_0/hair40_1/hair40_2/hair40_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair41_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair41_0/hair41_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair41_0/hair41_1/hair41_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair41_0/hair41_1/hair41_2/hair41_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair42_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair42_0/hair42_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair42_0/hair42_1/hair42_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair42_0/hair42_1/hair42_2/hair42_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair43_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair43_0/hair43_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair43_0/hair43_1/hair43_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair43_0/hair43_1/hair43_2/hair43_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair44_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair44_0/hair44_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair44_0/hair44_1/hair44_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair44_0/hair44_1/hair44_2/hair44_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair45_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair45_0/hair45_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair45_0/hair45_1/hair45_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair45_0/hair45_1/hair45_2/hair45_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair46_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair46_0/hair46_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair46_0/hair46_1/hair46_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair46_0/hair46_1/hair46_2/hair46_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair47_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair47_0/hair47_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair47_0/hair47_1/hair47_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair47_0/hair47_1/hair47_2/hair47_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair48_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair48_0/hair48_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair48_0/hair48_1/hair48_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair48_0/hair48_1/hair48_2/hair48_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair49_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair49_0/hair49_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair49_0/hair49_1/hair49_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair49_0/hair49_1/hair49_2/hair49_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair50_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair50_0/hair50_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair50_0/hair50_1/hair50_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair50_0/hair50_1/hair50_2/hair50_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair51_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair51_0/hair51_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair51_0/hair51_1/hair51_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair51_0/hair51_1/hair51_2/hair51_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair52_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair52_0/hair52_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair52_0/hair52_1/hair52_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair52_0/hair52_1/hair52_2/hair52_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair53_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair53_0/hair53_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair53_0/hair53_1/hair53_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair53_0/hair53_1/hair53_2/hair53_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair54_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair54_0/hair54_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair54_0/hair54_1/hair54_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair54_0/hair54_1/hair54_2/hair54_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair55_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair55_0/hair55_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair55_0/hair55_1/hair55_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair55_0/hair55_1/hair55_2/hair55_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair56_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair56_0/hair56_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair56_0/hair56_1/hair56_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair56_0/hair56_1/hair56_2/hair56_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair57_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair57_0/hair57_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair57_0/hair57_1/hair57_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair57_0/hair57_1/hair57_2/hair57_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair58_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair58_0/hair58_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair58_0/hair58_1/hair58_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair58_0/hair58_1/hair58_2/hair58_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair59_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair59_0/hair59_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair59_0/hair59_1/hair59_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair59_0/hair59_1/hair59_2/hair59_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair60_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair60_0/hair60_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair60_0/hair60_1/hair60_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair60_0/hair60_1/hair60_2/hair60_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair61_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair61_0/hair61_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair61_0/hair61_1/hair61_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair61_0/hair61_1/hair61_2/hair61_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair62_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair62_0/hair62_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair62_0/hair62_1/hair62_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair62_0/hair62_1/hair62_2/hair62_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair63_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair63_0/hair63_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair63_0/hair63_1/hair63_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair63_0/hair63_1/hair63_2/hair63_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair64_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair64_0/hair64_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair64_0/hair64_1/hair64_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair64_0/hair64_1/hair64_2/hair64_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair65_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair65_0/hair65_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair65_0/hair65_1/hair65_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair65_0/hair65_1/hair65_2/hair65_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair66_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair66_0/hair66_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair66_0/hair66_1/hair66_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair66_0/hair66_1/hair66_2/hair66_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair67_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair67_0/hair67_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair67_0/hair67_1/hair67_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair67_0/hair67_1/hair67_2/hair67_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair68_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair68_0/hair68_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair68_0/hair68_1/hair68_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair68_0/hair68_1/hair68_2/hair68_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair69_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair69_0/hair69_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair69_0/hair69_1/hair69_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair69_0/hair69_1/hair69_2/hair69_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair70_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair70_0/hair70_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair70_0/hair70_1/hair70_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair70_0/hair70_1/hair70_2/hair70_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair71_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair71_0/hair71_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair71_0/hair71_1/hair71_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair71_0/hair71_1/hair71_2/hair71_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair72_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair72_0/hair72_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair72_0/hair72_1/hair72_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair72_0/hair72_1/hair72_2/hair72_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair73_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair73_0/hair73_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair73_0/hair73_1/hair73_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair73_0/hair73_1/hair73_2/hair73_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair74_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair74_0/hair74_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair74_0/hair74_1/hair74_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair74_0/hair74_1/hair74_2/hair74_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair75_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair75_0/hair75_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair75_0/hair75_1/hair75_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair75_0/hair75_1/hair75_2/hair75_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair76_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair76_0/hair76_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair76_0/hair76_1/hair76_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair76_0/hair76_1/hair76_2/hair76_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair77_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair77_0/hair77_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair77_0/hair77_1/hair77_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair77_0/hair77_1/hair77_2/hair77_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair78_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair78_0/hair78_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair78_0/hair78_1/hair78_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair78_0/hair78_1/hair78_2/hair78_3
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair79_0
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair79_0/hair79_1
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair79_0/hair79_1/hair79_2
+    m_Weight: 0
+  - m_Path: rig/root/pelvis/chest/head/hair79_0/hair79_1/hair79_2/hair79_3
+    m_Weight: 0
   - m_Path: rig/root/pelvis/chest/instrument
     m_Weight: 0
   - m_Path: rig/root/pelvis/chest/mid1_l
